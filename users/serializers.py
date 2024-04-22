@@ -14,6 +14,7 @@ class CustomUserCreateSerializer(serializers.ModelSerializer):
             "username",
             "type",
             "password",
+            'experience',
         )
         extra_kwargs = {
             "password": {"write_only": True},
@@ -35,5 +36,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
             "id",
             "email",
             "username",
+            'experience',
             "type",
         )

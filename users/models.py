@@ -9,16 +9,19 @@ from django.utils.translation import gettext_lazy as _
 
 class Type(models.Model):
     CHOICES = [
-        ("pr", "provider"),
-        ("co", "consumer"),
+        ("pr", "customer"),
+        ("co", "contractor"),
     ]
 
 
 # Create your CustomUserManager here.
 class CustomUserManager(BaseUserManager):
-    def _create_user(self, email, password, username, type, **extra_fields):
+
+    def _create_user(self, email, password, experience, username, type, **extra_fields):
         if not email:
             raise ValueError(_("Email must be provided"))
+        if not experience:
+            raise ValueError(_("experience must be provided"))
         if not username:
             raise ValueError(_("Username must be provided"))
         if not password:
@@ -28,6 +31,7 @@ class CustomUserManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
+            experience = experience,
             username=username,
             type=type,
             **extra_fields,
@@ -41,6 +45,7 @@ class CustomUserManager(BaseUserManager):
         self,
         email,
         password,
+        experience,
         username,
         type,
         **extra_fields,
@@ -51,6 +56,7 @@ class CustomUserManager(BaseUserManager):
         return self._create_user(
             email,
             password,
+            experience,
             username,
             type,
             **extra_fields,
@@ -60,6 +66,7 @@ class CustomUserManager(BaseUserManager):
         self,
         email,
         password,
+        experience,
         username,
         type,
         **extra_fields,
@@ -70,6 +77,7 @@ class CustomUserManager(BaseUserManager):
         return self._create_user(
             email,
             password,
+            experience,
             username,
             type,
             **extra_fields,
@@ -91,6 +99,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=False,
         max_length=100,
     )
+    experience = models.CharField(
+        max_length=20,
+    )
+
     type = models.CharField(
         max_length=2,
         choices=Type.CHOICES,

@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "users",
     "djoser",
-    "inventory",
+
     "drf_yasg",
 ]
 

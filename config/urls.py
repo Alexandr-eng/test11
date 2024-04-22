@@ -21,7 +21,7 @@ from config.schema import schema_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/v1/", include("inventory.urls")),
+
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),
